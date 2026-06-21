@@ -1,0 +1,275 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-sans: var(--font-geist-sans), system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+
+  --ink: #080b11;
+  --surface: #0f141c;
+  --surface-2: #161d28;
+  --line: #232c3a;
+  --text: #e8eef5;
+  --text-dim: #7e8ca0;
+  --bid: #16c784;
+  --ask: #ea3943;
+  --amber: #ffb000;
+  --cyan: #2dd4bf;
+  --glow-amber: rgba(255, 176, 0, 0.18);
+
+  --bid-flash: rgba(22, 199, 132, 0.22);
+  --ask-flash: rgba(234, 57, 67, 0.22);
+}
+
+/* CRT amber-phosphor theme: amber-on-black, phosphor glow, mono-forward. */
+[data-theme='crt'] {
+  --ink: #0a0600;
+  --surface: #120c02;
+  --surface-2: #1a1103;
+  --line: #3a2a08;
+  --text: #ffb000;
+  --text-dim: #9a6a05;
+  --bid: #ffc83d;
+  --ask: #ff7a18;
+  --amber: #ffd166;
+  --cyan: #ffb000;
+  --glow-amber: rgba(255, 176, 0, 0.32);
+
+  --bid-flash: rgba(255, 200, 61, 0.18);
+  --ask-flash: rgba(255, 122, 24, 0.18);
+}
+
+* {
+  border-color: var(--line);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--ink);
+  color: var(--text);
+  font-feature-settings: 'ss01', 'cv01';
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+/* All numeric / data type renders with tabular figures. */
+.tnum {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum' 1;
+}
+
+/* Subtle background grid — instrument-panel feel. */
+.bg-grid {
+  background-image:
+    linear-gradient(to right, rgba(35, 44, 58, 0.35) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(35, 44, 58, 0.35) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+.hairline {
+  border-color: var(--line);
+}
+
+/* ── CRT visual layer ───────────────────────────────────────────── */
+.crt-scanlines {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+[data-theme='crt'] .crt-scanlines {
+  opacity: 1;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0) 0px,
+    rgba(0, 0, 0, 0) 2px,
+    rgba(0, 0, 0, 0.28) 3px,
+    rgba(0, 0, 0, 0.28) 4px
+  );
+}
+
+[data-theme='crt'] .crt-vignette {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 59;
+  background: radial-gradient(ellipse at center, transparent 55%, rgba(0, 0, 0, 0.55) 100%);
+}
+
+[data-theme='crt'] body {
+  text-shadow: 0 0 2px rgba(255, 176, 0, 0.55), 0 0 8px rgba(255, 176, 0, 0.12);
+}
+
+[data-theme='crt'] .font-sans {
+  font-family: var(--font-mono), ui-monospace, monospace !important;
+}
+
+[data-theme='crt'].crt-boot {
+  animation: crt-flicker 0.9s ease-out 1;
+}
+
+@keyframes crt-flicker {
+  0% { opacity: 0; }
+  10% { opacity: 0.6; }
+  15% { opacity: 0.3; }
+  25% { opacity: 0.9; }
+  30% { opacity: 0.5; }
+  100% { opacity: 1; }
+}
+
+/* Flash helpers for ticker behavior. */
+.flash-up {
+  animation: flashUp 0.5s ease-out;
+}
+.flash-down {
+  animation: flashDown 0.5s ease-out;
+}
+@keyframes flashUp {
+  0% { background-color: var(--bid-flash); }
+  100% { background-color: transparent; }
+}
+@keyframes flashDown {
+  0% { background-color: var(--ask-flash); }
+  100% { background-color: transparent; }
+}
+
+/* Focus rings — visible keyboard focus everywhere. */
+:focus-visible {
+  outline: 2px solid var(--amber);
+  outline-offset: 2px;
+}
+
+::selection {
+  background: var(--glow-amber);
+  color: var(--text);
+}
+
+/* Thin custom scrollbar. */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: var(--ink); }
+::-webkit-scrollbar-thumb { background: var(--line); border-radius: 0; }
+::-webkit-scrollbar-thumb:hover { background: var(--text-dim); }
+
+/* Magnetic cursor (desktop only). */
+.cursor-reticle {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 26px;
+  height: 26px;
+  margin: -13px 0 0 -13px;
+  border: 1px solid var(--amber);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  mix-blend-mode: difference;
+  transition: transform 0.12s ease-out, opacity 0.2s, width 0.15s, height 0.15s;
+  will-change: transform;
+}
+.cursor-dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 4px;
+  margin: -2px 0 0 -2px;
+  background: var(--amber);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+@media (hover: none), (pointer: coarse) {
+  .cursor-reticle, .cursor-dot { display: none; }
+}
+
+/* ── Reduced motion: strip all the theatrics ───────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+  [data-theme='crt'] .crt-scanlines { background: none; }
+  [data-theme='crt'].crt-boot { animation: none; }
+  .cursor-reticle, .cursor-dot { display: none !important; }
+}
+
+/* cmdk palette styling. */
+[cmdk-overlay] {
+  position: fixed;
+  inset: 0;
+  background: rgba(4, 6, 10, 0.7);
+  backdrop-filter: blur(3px);
+  z-index: 100;
+}
+[cmdk-dialog] {
+  position: fixed;
+  top: 18vh;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(92vw, 580px);
+  z-index: 101;
+}
+[cmdk-root] {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.6), 0 0 0 1px var(--line);
+}
+[cmdk-input] {
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--line);
+  color: var(--text);
+  padding: 16px 18px;
+  font-family: var(--font-mono), monospace;
+  font-size: 14px;
+  outline: none;
+}
+[cmdk-input]::placeholder { color: var(--text-dim); }
+[cmdk-list] {
+  max-height: 320px;
+  overflow-y: auto;
+  padding: 8px;
+}
+[cmdk-group-heading] {
+  color: var(--text-dim);
+  font-family: var(--font-mono), monospace;
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  padding: 10px 10px 6px;
+}
+[cmdk-item] {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  color: var(--text);
+  font-family: var(--font-mono), monospace;
+  font-size: 13px;
+  cursor: pointer;
+  border: 1px solid transparent;
+}
+[cmdk-item][data-selected='true'] {
+  background: var(--surface-2);
+  border-color: var(--line);
+  color: var(--amber);
+}
+[cmdk-empty] {
+  padding: 24px;
+  text-align: center;
+  color: var(--text-dim);
+  font-family: var(--font-mono), monospace;
+  font-size: 13px;
+}
