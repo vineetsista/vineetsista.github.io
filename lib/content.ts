@@ -24,7 +24,7 @@ export const EDUCATION = {
   dates: 'Aug 2024 → May 2028',
   scholar:
     'Engineering Scholar — selected as 1 of 96 students for a competitive program focused on innovation and hands-on engineering projects.',
-  gpa: '3.7 / 4.0',
+  gpa: '3.8 / 4.0',
   coursework: [
     'Data Structures & Algorithms',
     'Systems Programming / x86-64 Assembly',
@@ -182,7 +182,12 @@ export interface Project {
   repo?: string;
   live?: string;
   building?: boolean;
-  featured?: boolean;
+  featured?: boolean; // full-width flagship w/ deep-dive
+  elevated?: boolean; // accent border, no deep-dive
+  accent?: 'amber' | 'bid' | 'cyan';
+  // synthetic market data for the watchlist
+  price?: number;
+  change?: number; // percent
 }
 
 export const PROJECTS: Project[] = [
@@ -190,16 +195,38 @@ export const PROJECTS: Project[] = [
     ticker: 'LOB',
     name: 'Limit Order Book Engine',
     thesis:
-      'A nanosecond-latency limit order book matching engine in C++, processing real market data from the NASDAQ ITCH 5.0 feed — price-time priority matching, intrusive data structures, cache-conscious design, microbenchmarked hot paths.',
-    tech: ['C++', 'NASDAQ ITCH 5.0', 'Low-latency structures', 'Microbenchmarking'],
+      'A low-latency NASDAQ ITCH 5.0 limit order book engine in C++20 — zero-copy parsing, full-depth reconstruction, price-time priority matching, and a measured optimization journey down to ~85 ns hot paths. Paired with a queue-position-aware market-replay backtester (lock-free parallel replay) and a market maker with PnL / adverse-selection analytics.',
+    tech: ['C++20', 'NASDAQ ITCH 5.0', 'Zero-copy parsing', 'Lock-free replay', 'Microbenchmarking'],
     metrics: [
       { label: 'MATCH LAT', value: '~85ns', dir: 'flat' },
       { label: 'PRIORITY', value: 'PRICE-TIME', dir: 'flat' },
       { label: 'STATUS', value: 'BUILDING', dir: 'up' },
     ],
     date: '2025 → Present',
+    repo: 'https://github.com/vineetsista/limit-order-book-engine',
     building: true,
     featured: true,
+    accent: 'amber',
+    price: 187.42,
+    change: 2.18,
+  },
+  {
+    ticker: 'VLLM',
+    name: 'miniVLLM',
+    thesis:
+      'A from-scratch, high-performance LLM inference engine — paged KV cache, continuous batching, speculative decoding, a custom Triton kernel, and an OpenAI-compatible streaming server. Systems engineering all the way down to the GPU.',
+    tech: ['Python', 'PyTorch', 'Triton', 'CUDA', 'Streaming API'],
+    metrics: [
+      { label: 'KV CACHE', value: 'PAGED', dir: 'up' },
+      { label: 'BATCHING', value: 'CONTINUOUS', dir: 'up' },
+      { label: 'API', value: 'OPENAI-COMPAT', dir: 'flat' },
+    ],
+    date: '2025 → Present',
+    repo: 'https://github.com/vineetsista/minivllm',
+    elevated: true,
+    accent: 'cyan',
+    price: 42.88,
+    change: 5.64,
   },
   {
     ticker: 'VELO',
@@ -212,6 +239,8 @@ export const PROJECTS: Project[] = [
       { label: 'CADENCE', value: 'DAILY', dir: 'up' },
     ],
     repo: 'https://github.com/vineetsista/VeloQuant',
+    price: 73.05,
+    change: 1.42,
   },
   {
     ticker: 'PHNTM',
@@ -223,6 +252,8 @@ export const PROJECTS: Project[] = [
       { label: 'PIPELINE', value: 'CLAUDE→11L→RMTN', dir: 'up' },
     ],
     repo: 'https://github.com/vineetsista/Phantom-Codebase-Explainer',
+    price: 58.30,
+    change: 3.11,
   },
   {
     ticker: 'WRTH',
@@ -235,6 +266,8 @@ export const PROJECTS: Project[] = [
     ],
     repo: 'https://github.com/vineetsista/Wraith',
     live: 'https://wraith-tau.vercel.app',
+    price: 31.77,
+    change: -0.88,
   },
   {
     ticker: 'ALPHA',
@@ -247,6 +280,8 @@ export const PROJECTS: Project[] = [
       { label: 'SIZING', value: 'FRAC KELLY', dir: 'flat' },
     ],
     repo: 'https://github.com/vineetsista/AlphaStream',
+    price: 64.20,
+    change: 2.73,
   },
   {
     ticker: 'DRKM',
@@ -259,6 +294,8 @@ export const PROJECTS: Project[] = [
       { label: 'BRIEFING', value: 'DAILY', dir: 'flat' },
     ],
     repo: 'https://github.com/vineetsista/Darkmile',
+    price: 49.95,
+    change: 1.07,
   },
   {
     ticker: 'MLWR',
@@ -272,6 +309,8 @@ export const PROJECTS: Project[] = [
     ],
     date: 'Mar 2025 → Present',
     repo: 'https://github.com/vineetsista',
+    price: 27.16,
+    change: 4.02,
   },
   {
     ticker: 'PLNT',
@@ -285,6 +324,8 @@ export const PROJECTS: Project[] = [
     ],
     date: 'Aug 2025',
     repo: 'https://github.com/vineetsista/Plant-Care-Assistant',
+    price: 19.80,
+    change: 0.64,
   },
 ];
 
@@ -311,7 +352,7 @@ export interface CurrentItem {
 
 export const CURRENTLY: CurrentItem[] = [
   { k: 'interning', v: 'JPMorganChase · Software Engineering', accent: 'amber' },
-  { k: 'building', v: 'A nanosecond C++ limit order book engine', accent: 'bid' },
+  { k: 'building', v: 'A nanosecond C++ order book + an LLM inference engine', accent: 'bid' },
   { k: 'leading', v: 'AWS Cloud Club @ Ohio State', accent: 'cyan' },
   { k: 'researching', v: 'Explainable medicine & clinical ML', accent: 'amber' },
   { k: 'reading the tape', v: 'NASDAQ ITCH 5.0', accent: 'bid' },
@@ -333,7 +374,7 @@ export const STATS: StatItem[] = [
   { value: 16, prefix: '+', suffix: '%', label: 'malware accuracy', sub: 'TF-IDF + RF tuning', accent: 'bid' },
   { value: 98, suffix: '%', label: 'model accuracy', sub: 'plant-care recommender', accent: 'cyan' },
   { value: 85, suffix: 'ns', label: 'match latency', sub: 'order-book hot path', accent: 'ask' },
-  { value: 3.7, decimals: 1, label: 'GPA', sub: 'honors · 4.0 scale', accent: 'amber' },
+  { value: 3.8, decimals: 1, label: 'GPA', sub: 'honors · 4.0 scale', accent: 'amber' },
   { value: 96, prefix: '1 / ', label: 'engineering scholars', sub: 'competitive selection', accent: 'bid' },
 ];
 
@@ -346,12 +387,13 @@ export interface Tick {
 
 export const TICKER: Tick[] = [
   { label: 'JPM', value: 'SWE INTERN', dir: 'up' },
-  { label: 'GPA', value: '3.70', dir: 'up' },
+  { label: 'GPA', value: '3.80', dir: 'up' },
   { label: 'SCHOLAR', value: '1 OF 96', dir: 'up' },
   { label: 'NOTES', value: '260K+', dir: 'flat' },
   { label: 'MLWR', value: '+16%', dir: 'up' },
   { label: 'PLNT', value: '98%', dir: 'up' },
   { label: 'LOB', value: '~85ns', dir: 'flat' },
+  { label: 'VLLM', value: 'PAGED-KV', dir: 'up' },
   { label: 'LANGS', value: '×9', dir: 'flat' },
   { label: 'AWS', value: 'TECH LEAD', dir: 'up' },
   { label: 'OSU', value: "CS '28 HON", dir: 'flat' },

@@ -7,12 +7,15 @@ import { useOrderBookSim } from '@/components/hero/useOrderBookSim';
 import type { Level } from '@/components/hero/orderBookSim';
 import { useTerminal } from '@/components/shell/ThemeProvider';
 import { blipUp, blipDown } from '@/lib/sound';
+import { openExternal } from '@/lib/nav';
 
 const PIPELINE = [
   { k: 'FEED', t: 'ITCH 5.0 Feed Handler', d: 'Raw UDP/PCAP ingest of NASDAQ TotalView-ITCH 5.0 messages.' },
-  { k: 'PARSE', t: 'Binary Parser', d: 'Zero-copy decode of Add/Cancel/Execute/Replace messages.' },
-  { k: 'BOOK', t: 'Limit Order Book', d: 'Intrusive, cache-conscious price levels; O(1) best-bid/ask.' },
+  { k: 'PARSE', t: 'Zero-Copy Parser', d: 'Zero-copy decode of Add/Cancel/Execute/Replace into the book.' },
+  { k: 'BOOK', t: 'Limit Order Book', d: 'Full-depth reconstruction; intrusive, cache-conscious price levels; O(1) best-bid/ask.' },
   { k: 'MATCH', t: 'Matching Core', d: 'Price-time priority crossing; deterministic fills.' },
+  { k: 'REPLAY', t: 'Market-Replay Backtester', d: 'Queue-position-aware replay; lock-free parallel across symbols.' },
+  { k: 'MM', t: 'Market Maker', d: 'Quoting strategy with PnL & adverse-selection analytics.' },
   { k: 'BENCH', t: 'Microbench Harness', d: 'Hot-path latency probes; ~85 ns match, percentile capture.' },
 ];
 
@@ -32,7 +35,7 @@ export function EngineDeepDive() {
         index="04"
         label="signature · deep-dive"
         title="The Order Book Engine"
-        caption="A nanosecond-latency limit order book matching engine in C++, fed by real NASDAQ ITCH 5.0 data. The flagship — in active development."
+        caption="A low-latency NASDAQ ITCH 5.0 limit order book engine in C++20 — plus a queue-position-aware market-replay backtester and a market maker with PnL / adverse-selection analytics. The flagship, in active development."
       />
 
       <div className="grid gap-8 lg:grid-cols-[1.15fr_0.85fr]">
@@ -65,8 +68,8 @@ export function EngineDeepDive() {
               {[
                 { k: 'MATCH LAT', v: '~85 ns' },
                 { k: 'PRIORITY', v: 'PRICE-TIME' },
-                { k: 'LANG', v: 'C++' },
-                { k: 'FEED', v: 'ITCH 5.0' },
+                { k: 'LANG', v: 'C++20' },
+                { k: 'REPLAY', v: 'LOCK-FREE' },
               ].map((s) => (
                 <div key={s.k} className="bg-surface px-3 py-3">
                   <div className="font-mono text-[8px] uppercase tracking-wider text-text-dim">{s.k}</div>
@@ -76,10 +79,17 @@ export function EngineDeepDive() {
             </div>
 
             <div className="mt-4 flex flex-wrap gap-1.5">
-              {['C++', 'NASDAQ ITCH 5.0', 'Intrusive structures', 'Cache-conscious', 'Microbenchmarking'].map((t) => (
+              {['C++20', 'NASDAQ ITCH 5.0', 'Zero-copy parsing', 'Lock-free replay', 'Market maker', 'Microbenchmarking'].map((t) => (
                 <Tag key={t}>{t}</Tag>
               ))}
             </div>
+
+            <button
+              onClick={() => openExternal('https://github.com/vineetsista/limit-order-book-engine')}
+              className="mt-4 inline-flex items-center gap-2 font-mono text-[11px] text-amber link-underline"
+            >
+              view source — github.com/vineetsista/limit-order-book-engine ↗
+            </button>
           </div>
         </Reveal>
 
