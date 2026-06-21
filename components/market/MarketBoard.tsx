@@ -2,6 +2,7 @@
 
 import { PriceChart } from './PriceChart';
 import { Sparkline } from './Sparkline';
+import { TradeTape } from './TradeTape';
 import { PROJECTS, type Project } from '@/lib/content';
 import { openExternal, scrollToSection } from '@/lib/nav';
 
@@ -38,7 +39,7 @@ function WatchRow({ p, i }: { p: Project; i: number }) {
 export function MarketBoard() {
   const rows = PROJECTS.filter((p) => p.price !== undefined);
   return (
-    <div className="grid gap-3 lg:grid-cols-[1.4fr_1fr]">
+    <div className="grid gap-3 lg:grid-cols-[1.5fr_1fr]">
       <PriceChart />
       <div className="border border-line bg-ink/50">
         <div className="flex items-center justify-between border-b border-line px-3 py-2.5 font-mono text-[10px] uppercase tracking-wider text-text-dim">
@@ -50,6 +51,9 @@ export function MarketBoard() {
             <WatchRow key={p.ticker} p={p} i={i} />
           ))}
         </div>
+      </div>
+      <div className="lg:col-span-2">
+        <TradeTape />
       </div>
     </div>
   );

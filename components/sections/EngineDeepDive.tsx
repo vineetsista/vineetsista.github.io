@@ -8,6 +8,7 @@ import type { Level } from '@/components/hero/orderBookSim';
 import { useTerminal } from '@/components/shell/ThemeProvider';
 import { blipUp, blipDown } from '@/lib/sound';
 import { openExternal } from '@/lib/nav';
+import { LatencyJourney } from './LatencyJourney';
 
 const PIPELINE = [
   { k: 'FEED', t: 'ITCH 5.0 Feed Handler', d: 'Raw UDP/PCAP ingest of NASDAQ TotalView-ITCH 5.0 messages.' },
@@ -147,6 +148,13 @@ export function EngineDeepDive() {
           </div>
         </Reveal>
       </div>
+
+      {/* the optimization journey — the "how fast can I make it" centerpiece */}
+      <Reveal>
+        <div className="mt-6">
+          <LatencyJourney />
+        </div>
+      </Reveal>
     </SectionShell>
   );
 }

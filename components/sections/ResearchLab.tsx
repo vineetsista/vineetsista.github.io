@@ -49,7 +49,7 @@ export function ResearchLab() {
   return (
     <SectionShell id="research">
       <SectionHeader
-        index="05"
+        index="06"
         label="research lab"
         title="Explainable Medicine & Clinical ML"
         caption="At OSU's BMBL and AIMed labs — probing how language models make clinical decisions, and mapping where urgent-care conditions cluster in latent space."

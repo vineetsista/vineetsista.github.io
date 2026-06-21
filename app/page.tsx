@@ -5,6 +5,7 @@ import { Throughline } from '@/components/sections/Throughline';
 import { PositionBlotter } from '@/components/sections/PositionBlotter';
 import { Instruments } from '@/components/sections/Instruments';
 import { EngineDeepDive } from '@/components/sections/EngineDeepDive';
+import { Inference } from '@/components/sections/Inference';
 import { ResearchLab } from '@/components/sections/ResearchLab';
 import { SystemSpec } from '@/components/sections/SystemSpec';
 import { Terminal } from '@/components/sections/Terminal';
@@ -20,6 +21,7 @@ export default function Page() {
       <PositionBlotter />
       <Instruments />
       <EngineDeepDive />
+      <Inference />
       <ResearchLab />
       <SystemSpec />
       <Terminal />

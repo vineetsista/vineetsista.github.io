@@ -61,7 +61,8 @@ export const ROLES: Role[] = [
     location: 'Columbus, OH',
     active: true,
     bullets: [
-      'Engineering on production financial systems at one of the largest banks in the world — where latency, correctness, and scale are not optional.',
+      'Shipping software on production financial systems at one of the world’s largest banks.',
+      'Where latency, correctness, and scale aren’t features — they’re the baseline.',
     ],
   },
   {
@@ -74,8 +75,8 @@ export const ROLES: Role[] = [
     location: 'Columbus, OH',
     active: true,
     bullets: [
-      'Coordinates AWS-based projects, guiding system design across compute, storage, and data services.',
-      'Mentors peers on architectural patterns, service selection, and cloud security fundamentals.',
+      'Leads cloud architecture across the club’s AWS projects — compute, storage, data, security.',
+      'Mentors peers on system design: when to reach for which service, and why.',
     ],
   },
   {
@@ -89,8 +90,8 @@ export const ROLES: Role[] = [
     location: 'Columbus, OH',
     active: false,
     bullets: [
-      'Implemented Python data pipelines to clean and organize EHR, genomics, and wearable data from the All of Us Research Program, supporting cohort construction and downstream research analysis.',
-      'Analyzed longitudinal clinical datasets for time-series and LLM projects: feature engineering, exploratory analysis, and structured data prep for modeling workflows.',
+      'Built Python pipelines turning messy EHR, genomics, and wearable data (All of Us) into model-ready cohorts.',
+      'Ran feature engineering and exploratory analysis powering time-series and LLM clinical projects.',
     ],
   },
   {
@@ -104,8 +105,8 @@ export const ROLES: Role[] = [
     location: 'Columbus, OH',
     active: false,
     bullets: [
-      'Built an explainable-medicine workflow generating heatmaps by probing LLMs with targeted token removals, surfacing the features most predictive of clinical decision-making and reducing hallucinations.',
-      'Processed and cleaned 260,000+ de-identified patient notes (Regex + PyTorch), applied NER models to extract clinical entities, and trained a sparse autoencoder with 5,000+ activations — using UMAP to visualize how urgent-care conditions cluster in latent space and reveal meaningful clinical structure.',
+      'Built an explainable-medicine workflow that probes LLMs with token ablations to surface what actually drives clinical decisions — cutting hallucinations.',
+      'Cleaned 260K+ patient notes and trained a sparse autoencoder (5K+ activations), mapping urgent-care conditions in latent space with UMAP.',
     ],
   },
   {
@@ -119,7 +120,8 @@ export const ROLES: Role[] = [
     location: 'Remote',
     active: true,
     bullets: [
-      'Building an ML pipeline that detects Linux malware from system-call traces — improving classification accuracy by 16% with TF-IDF feature extraction and Random Forest tuning. (See Instruments → MLWR.)',
+      'Building an ML pipeline that fingerprints Linux malware from system-call traces.',
+      '+16% classification accuracy via TF-IDF features and Random Forest tuning. (See Instruments → MLWR.)',
     ],
   },
   {
@@ -133,7 +135,8 @@ export const ROLES: Role[] = [
     location: 'Columbus, OH',
     active: false,
     bullets: [
-      'Wrote embedded software for the vehicle-electronics subsystem of Ohio State’s Formula SAE race car — real hardware, real deadlines, real consequences.',
+      'Wrote embedded firmware for the vehicle-electronics subsystem of OSU’s Formula SAE racecar.',
+      'Real hardware, real deadlines — software that has to survive the track.',
     ],
   },
   {
@@ -147,8 +150,8 @@ export const ROLES: Role[] = [
     location: 'Columbus, OH',
     active: false,
     bullets: [
-      'Guided 72 first-year students through problem-solving in programming, design, and data analysis (MATLAB, Excel).',
-      'Ran 3 weekly lab sessions and office hours; graded reports and projects with constructive feedback on data acquisition, modeling, and technical design.',
+      'Taught 72 first-year engineers problem-solving in programming, design, and data analysis.',
+      'Ran 3 weekly labs and office hours; graded for clarity on modeling and data acquisition.',
     ],
   },
   {
@@ -158,10 +161,12 @@ export const ROLES: Role[] = [
     start: '2025-01',
     role: 'Autonomous Systems Developer',
     org: 'AI Robotics Club',
+    sub: 'F1Tenth · ROS autonomy',
     location: 'Columbus, OH',
     active: false,
     bullets: [
-      'Developed perception and control software for autonomous robotic systems.',
+      'Built ROS autonomy for an F1Tenth autonomous racer — PID lane-following tuned in simulation.',
+      'Cut cross-track error ~74% and navigation latency ~29% while holding LiDAR at 20 Hz.',
     ],
   },
 ];
@@ -425,10 +430,46 @@ export const SECTIONS: SectionDef[] = [
   { id: 'blotter', label: 'experience' },
   { id: 'instruments', label: 'projects' },
   { id: 'engine', label: 'engine' },
+  { id: 'inference', label: 'inference' },
   { id: 'research', label: 'research' },
   { id: 'spec', label: 'skills' },
   { id: 'terminal', label: 'terminal' },
   { id: 'contact', label: 'contact' },
 ];
+
+// ── The Optimization Journey — latency benchmark (order book hot path) ──
+export interface OptStage {
+  label: string;
+  ns: number; // measured latency, nanoseconds
+  note: string;
+}
+
+export const LATENCY_JOURNEY: OptStage[] = [
+  { label: 'Naive std::map book', ns: 1240, note: 'red-black tree, pointer chasing, cache misses everywhere' },
+  { label: 'Flat array + intrusive lists', ns: 410, note: 'contiguous price levels, no per-order allocation' },
+  { label: 'Cache-conscious layout', ns: 190, note: 'hot fields packed; best bid/ask in one cache line' },
+  { label: 'Branchless hot path', ns: 112, note: 'predication over branches; fewer mispredicts' },
+  { label: 'Zero-copy SIMD parse', ns: 85, note: 'parse + apply in place; vectorized field decode' },
+];
+
+// ── miniVLLM inference panel ───────────────────────────────────────
+export const INFERENCE = {
+  prompt: 'def is_prime(n):',
+  // streamed token-by-token; each entry is one "token"
+  completion: [
+    '\n    ', 'if', ' n', ' <', ' 2', ':', '\n        ', 'return', ' False',
+    '\n    ', 'for', ' i', ' in', ' range', '(2', ', int', '(n', '**', '0.5)',
+    '+1', '):', '\n        ', 'if', ' n', ' %', ' i', ' ==', ' 0', ':',
+    '\n            ', 'return', ' False', '\n    ', 'return', ' True',
+  ],
+  tokensPerSec: 1840,
+  specs: [
+    { k: 'KV CACHE', v: 'PAGED' },
+    { k: 'BATCHING', v: 'CONTINUOUS' },
+    { k: 'DECODE', v: 'SPECULATIVE' },
+    { k: 'KERNEL', v: 'TRITON' },
+  ],
+  repo: 'https://github.com/vineetsista/minivllm',
+};
 
 export const BUILD_HASH = 'a1f9c3e'; // static build marker

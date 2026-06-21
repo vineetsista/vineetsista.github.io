@@ -226,7 +226,7 @@ export function Terminal() {
   return (
     <SectionShell id="terminal">
       <SectionHeader
-        index="07"
+        index="08"
         label="interactive · cli"
         title="Terminal"
         caption="A real shell. Type a command — `help` to start. Arrow keys for history, Tab to complete."

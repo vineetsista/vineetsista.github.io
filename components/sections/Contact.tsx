@@ -25,7 +25,7 @@ export function Contact() {
     <SectionShell id="contact" className="pb-24">
       <Reveal>
         <div className="mb-3 flex items-center gap-3 font-mono text-[10px] uppercase tracking-wider text-text-dim">
-          <span className="text-amber">08</span>
+          <span className="text-amber">09</span>
           <span className="h-px w-8 bg-line" />
           <span>open channel</span>
         </div>

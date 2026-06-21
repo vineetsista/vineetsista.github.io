@@ -13,7 +13,7 @@ export function SystemSpec() {
   return (
     <SectionShell id="spec">
       <SectionHeader
-        index="06"
+        index="07"
         label="system spec"
         title="Technical Arsenal"
         caption="The datasheet — grouped by subsystem, the way a device spec or risk sheet reads."

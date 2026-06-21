@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion';
 import { useOrderBookSim } from './useOrderBookSim';
 import { OrderBookView } from './OrderBookView';
+import { Sparkline } from '@/components/market/Sparkline';
 import { IDENTITY } from '@/lib/content';
 import { useIsCoarsePointer, usePrefersReducedMotion } from '@/lib/hooks';
 import { openExternal, scrollToSection } from '@/lib/nav';
@@ -24,6 +25,7 @@ export function OrderBookHero() {
       <div className="mesh" aria-hidden />
       <div className="bg-grid pointer-events-none absolute inset-0 opacity-30" aria-hidden />
       <div
+        data-parallax="0.25"
         className="pointer-events-none absolute -left-40 top-1/4 h-[480px] w-[480px] rounded-full opacity-[0.08] blur-[130px] animate-pulse-glow"
         style={{ background: 'var(--amber)' }}
         aria-hidden
@@ -96,6 +98,14 @@ export function OrderBookHero() {
             <span className="text-bid">● {live ? 'streaming' : 'static'}</span>
           </div>
           <OrderBookView snap={snap} rows={8} />
+          {/* session P&L chip */}
+          <div className="mt-2 flex items-center justify-between border border-line bg-surface/40 px-2.5 py-1.5">
+            <span className="font-mono text-[9px] uppercase tracking-wider text-text-dim">session p&amp;l</span>
+            <span className="flex items-center gap-2">
+              <Sparkline end={2.18} trend={2.18} seed={5} up w={70} h={18} />
+              <span className="tnum font-mono text-[11px] font-semibold text-bid">+2.18%</span>
+            </span>
+          </div>
           <div className="mt-2 flex items-center justify-between font-mono text-[9px] uppercase tracking-wider text-text-dim">
             <span>price-time priority</span>
             <span>
