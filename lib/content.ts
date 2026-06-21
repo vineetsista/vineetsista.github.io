@@ -39,9 +39,11 @@ export const EDUCATION = {
 export interface Role {
   id: string;
   dates: string;
+  duration: string; // e.g. "1 yr 5 mos"
   start: string; // sortable YYYY-MM
   role: string;
   org: string;
+  sub?: string; // sub-label / team / advisor
   location: string;
   active: boolean;
   bullets: string[];
@@ -52,16 +54,20 @@ export const ROLES: Role[] = [
   {
     id: 'jpmc',
     dates: 'Jun 2026 → Present',
+    duration: '1 mo',
     start: '2026-06',
     role: 'Software Engineering Intern',
     org: 'JPMorganChase',
     location: 'Columbus, OH',
     active: true,
-    bullets: [],
+    bullets: [
+      'Engineering on production financial systems at one of the largest banks in the world — where latency, correctness, and scale are not optional.',
+    ],
   },
   {
     id: 'aws',
     dates: 'Jan 2026 → Present',
+    duration: '6 mos',
     start: '2026-01',
     role: 'Technical Lead',
     org: 'AWS Cloud Club @ Ohio State',
@@ -75,73 +81,88 @@ export const ROLES: Role[] = [
   {
     id: 'aimed',
     dates: 'Jan 2026 → Apr 2026',
+    duration: '4 mos',
     start: '2026-01',
     role: 'AI Research Assistant',
-    org: 'OSU Wexner Medical Center — AIMed Lab (Dr. Ping Zhang)',
+    org: 'OSU Wexner Medical Center',
+    sub: 'AIMed Lab · Dr. Ping Zhang',
     location: 'Columbus, OH',
     active: false,
     bullets: [
-      'Built Python data pipelines to clean and organize EHR, genomics, and wearable data from the All of Us Research Program, supporting cohort construction and downstream analysis.',
-      'Analyzed longitudinal clinical datasets for time-series and LLM projects: feature engineering, exploratory analysis, structured data prep for modeling.',
+      'Implemented Python data pipelines to clean and organize EHR, genomics, and wearable data from the All of Us Research Program, supporting cohort construction and downstream research analysis.',
+      'Analyzed longitudinal clinical datasets for time-series and LLM projects: feature engineering, exploratory analysis, and structured data prep for modeling workflows.',
     ],
   },
   {
     id: 'bmbl',
     dates: 'Sep 2025 → Apr 2026',
+    duration: '8 mos',
     start: '2025-09',
     role: 'AI Research Intern',
-    org: 'Bioinformatics & Mathematical Biosciences Lab (Dr. Qin Ma)',
+    org: 'Bioinformatics & Mathematical Biosciences Lab',
+    sub: 'BMBL · Dr. Qin Ma',
     location: 'Columbus, OH',
     active: false,
     bullets: [
       'Built an explainable-medicine workflow generating heatmaps by probing LLMs with targeted token removals, surfacing the features most predictive of clinical decision-making and reducing hallucinations.',
-      'Processed and cleaned 260,000+ de-identified patient notes (Regex + PyTorch), applied NER models to extract clinical entities, and trained a sparse autoencoder with 5,000+ activations, using UMAP to visualize how urgent-care conditions cluster in latent space.',
-    ],
-  },
-  {
-    id: 'formula',
-    dates: 'Aug 2025 → Dec 2025',
-    start: '2025-08',
-    role: 'Embedded Systems Software Engineer (Vehicle Electronics)',
-    org: 'Formula Buckeyes',
-    location: 'Columbus, OH',
-    active: false,
-    bullets: [],
-  },
-  {
-    id: 'ta',
-    dates: 'Apr 2025 → Dec 2025',
-    start: '2025-04',
-    role: 'Undergraduate Teaching Assistant — ENGR 1181 Fundamentals of Engineering',
-    org: 'OSU College of Engineering',
-    location: 'Columbus, OH',
-    active: false,
-    bullets: [
-      'Guided 72 first-year students through programming, design, and data analysis (MATLAB, Excel).',
-      'Ran 3 weekly lab sessions and office hours; graded reports and projects with constructive feedback.',
+      'Processed and cleaned 260,000+ de-identified patient notes (Regex + PyTorch), applied NER models to extract clinical entities, and trained a sparse autoencoder with 5,000+ activations — using UMAP to visualize how urgent-care conditions cluster in latent space and reveal meaningful clinical structure.',
     ],
   },
   {
     id: 'malware',
     dates: 'Feb 2025 → Present',
+    duration: '1 yr 5 mos',
     start: '2025-02',
-    role: 'ML Engineer — Dynamic Linux Malware Analysis',
-    org: 'Independent Research',
+    role: 'ML Engineer',
+    org: 'Dynamic Linux Malware Analysis',
+    sub: 'Independent research · also a flagship project',
     location: 'Remote',
     active: true,
     bullets: [
-      'ML pipeline detecting Linux malware via system-call traces (also a flagship project — see Instruments).',
+      'Building an ML pipeline that detects Linux malware from system-call traces — improving classification accuracy by 16% with TF-IDF feature extraction and Random Forest tuning. (See Instruments → MLWR.)',
+    ],
+  },
+  {
+    id: 'formula',
+    dates: 'Aug 2025 → Dec 2025',
+    duration: '5 mos',
+    start: '2025-08',
+    role: 'Embedded Systems Software Engineer',
+    org: 'Formula Buckeyes',
+    sub: 'Vehicle Electronics',
+    location: 'Columbus, OH',
+    active: false,
+    bullets: [
+      'Wrote embedded software for the vehicle-electronics subsystem of Ohio State’s Formula SAE race car — real hardware, real deadlines, real consequences.',
+    ],
+  },
+  {
+    id: 'ta',
+    dates: 'Apr 2025 → Dec 2025',
+    duration: '9 mos',
+    start: '2025-04',
+    role: 'Undergraduate Teaching Assistant',
+    org: 'OSU College of Engineering',
+    sub: 'ENGR 1181 · Fundamentals of Engineering',
+    location: 'Columbus, OH',
+    active: false,
+    bullets: [
+      'Guided 72 first-year students through problem-solving in programming, design, and data analysis (MATLAB, Excel).',
+      'Ran 3 weekly lab sessions and office hours; graded reports and projects with constructive feedback on data acquisition, modeling, and technical design.',
     ],
   },
   {
     id: 'robotics',
     dates: 'Jan 2025 → Sep 2025',
+    duration: '9 mos',
     start: '2025-01',
     role: 'Autonomous Systems Developer',
     org: 'AI Robotics Club',
     location: 'Columbus, OH',
     active: false,
-    bullets: [],
+    bullets: [
+      'Developed perception and control software for autonomous robotic systems.',
+    ],
   },
 ];
 
@@ -157,6 +178,7 @@ export interface Project {
   thesis: string;
   tech: string[];
   metrics: Metric[];
+  date?: string;
   repo?: string;
   live?: string;
   building?: boolean;
@@ -175,6 +197,7 @@ export const PROJECTS: Project[] = [
       { label: 'PRIORITY', value: 'PRICE-TIME', dir: 'flat' },
       { label: 'STATUS', value: 'BUILDING', dir: 'up' },
     ],
+    date: '2025 → Present',
     building: true,
     featured: true,
   },
@@ -247,6 +270,8 @@ export const PROJECTS: Project[] = [
       { label: 'ACCURACY', value: '+16%', dir: 'up' },
       { label: 'FEATURES', value: 'TF-IDF', dir: 'flat' },
     ],
+    date: 'Mar 2025 → Present',
+    repo: 'https://github.com/vineetsista',
   },
   {
     ticker: 'PLNT',
@@ -258,8 +283,80 @@ export const PROJECTS: Project[] = [
       { label: 'MODEL', value: '98%', dir: 'up' },
       { label: 'UI', value: 'STREAMLIT', dir: 'flat' },
     ],
+    date: 'Aug 2025',
     repo: 'https://github.com/vineetsista/Plant-Care-Assistant',
   },
+];
+
+// ── Personal voice — the human layer ──────────────────────────────
+export const MANIFESTO = {
+  eyebrow: '// the operator',
+  // Each line renders on its own; the serif/amber words carry the voice.
+  lines: [
+    "I'm Vineet — a CS Honors student at Ohio State who got a little obsessed with one question:",
+    'how fast can a thing actually go?',
+  ],
+  body: [
+    "Most days I'm somewhere between a C++ order book that argues about nanoseconds, a research lab teaching language models to explain themselves, and an AI product that has to ship intelligence before the market opens at 7:30.",
+    "I like problems that are equal parts fast, correct, and real. I build things that have to hold up when it counts — and I don't love waiting.",
+  ],
+  signoff: "Let's build something that has to be fast.",
+};
+
+export interface CurrentItem {
+  k: string;
+  v: string;
+  accent?: 'amber' | 'bid' | 'cyan';
+}
+
+export const CURRENTLY: CurrentItem[] = [
+  { k: 'interning', v: 'JPMorganChase · Software Engineering', accent: 'amber' },
+  { k: 'building', v: 'A nanosecond C++ limit order book engine', accent: 'bid' },
+  { k: 'leading', v: 'AWS Cloud Club @ Ohio State', accent: 'cyan' },
+  { k: 'researching', v: 'Explainable medicine & clinical ML', accent: 'amber' },
+  { k: 'reading the tape', v: 'NASDAQ ITCH 5.0', accent: 'bid' },
+  { k: 'based in', v: 'Columbus, OH · from Naperville, IL', accent: 'cyan' },
+];
+
+export interface StatItem {
+  value: number;
+  suffix?: string;
+  prefix?: string;
+  decimals?: number;
+  label: string;
+  sub: string;
+  accent?: 'amber' | 'bid' | 'ask' | 'cyan';
+}
+
+export const STATS: StatItem[] = [
+  { value: 260, suffix: 'K+', label: 'patient notes', sub: 'cleaned & processed', accent: 'amber' },
+  { value: 16, prefix: '+', suffix: '%', label: 'malware accuracy', sub: 'TF-IDF + RF tuning', accent: 'bid' },
+  { value: 98, suffix: '%', label: 'model accuracy', sub: 'plant-care recommender', accent: 'cyan' },
+  { value: 85, suffix: 'ns', label: 'match latency', sub: 'order-book hot path', accent: 'ask' },
+  { value: 3.7, decimals: 1, label: 'GPA', sub: 'honors · 4.0 scale', accent: 'amber' },
+  { value: 96, prefix: '1 / ', label: 'engineering scholars', sub: 'competitive selection', accent: 'bid' },
+];
+
+// Ticker-tape facts that scroll across the screen.
+export interface Tick {
+  label: string;
+  value: string;
+  dir?: 'up' | 'down' | 'flat';
+}
+
+export const TICKER: Tick[] = [
+  { label: 'JPM', value: 'SWE INTERN', dir: 'up' },
+  { label: 'GPA', value: '3.70', dir: 'up' },
+  { label: 'SCHOLAR', value: '1 OF 96', dir: 'up' },
+  { label: 'NOTES', value: '260K+', dir: 'flat' },
+  { label: 'MLWR', value: '+16%', dir: 'up' },
+  { label: 'PLNT', value: '98%', dir: 'up' },
+  { label: 'LOB', value: '~85ns', dir: 'flat' },
+  { label: 'LANGS', value: '×9', dir: 'flat' },
+  { label: 'AWS', value: 'TECH LEAD', dir: 'up' },
+  { label: 'OSU', value: "CS '28 HON", dir: 'flat' },
+  { label: 'ITCH', value: '5.0', dir: 'flat' },
+  { label: 'LOC', value: 'COLUMBUS·OH', dir: 'flat' },
 ];
 
 export const SKILLS = {
@@ -281,7 +378,8 @@ export interface SectionDef {
 
 export const SECTIONS: SectionDef[] = [
   { id: 'hero', label: 'home' },
-  { id: 'throughline', label: 'about' },
+  { id: 'about', label: 'about' },
+  { id: 'throughline', label: 'thesis' },
   { id: 'blotter', label: 'experience' },
   { id: 'instruments', label: 'projects' },
   { id: 'engine', label: 'engine' },

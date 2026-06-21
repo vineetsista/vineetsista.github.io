@@ -12,7 +12,7 @@ export function Throughline() {
           <span className="h-px w-8 bg-line" />
           <span>thesis</span>
         </div>
-        <p className="max-w-4xl font-sans text-xl font-medium leading-snug tracking-tight text-text sm:text-3xl sm:leading-snug">
+        <p className="max-w-4xl font-display text-2xl font-semibold leading-snug tracking-tight text-text sm:text-4xl sm:leading-snug">
           {THROUGHLINE.split('. ').map((s, i, arr) => (
             <span key={i}>
               {s}

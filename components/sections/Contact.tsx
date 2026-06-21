@@ -29,8 +29,8 @@ export function Contact() {
           <span className="h-px w-8 bg-line" />
           <span>open channel</span>
         </div>
-        <h2 className="font-sans text-3xl font-semibold tracking-tight text-text sm:text-5xl">
-          The terminal is <span className="text-amber">open</span>.
+        <h2 className="font-display text-4xl font-bold tracking-tight text-text sm:text-6xl">
+          The terminal is <span className="font-serif-accent italic text-amber">open</span>.
         </h2>
         <p className="mt-4 max-w-xl text-[15px] leading-relaxed text-text-dim">
           Building something fast, correct, and real — or hiring someone who cares about the nanoseconds? Let&rsquo;s talk.

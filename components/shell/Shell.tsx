@@ -6,6 +6,7 @@ import { StatusBar } from './StatusBar';
 import { CommandPalette } from './CommandPalette';
 import { BootSequence } from './BootSequence';
 import { MagneticCursor } from './MagneticCursor';
+import { ScrollProgress } from './ScrollProgress';
 import { usePrefersReducedMotion } from '@/lib/hooks';
 
 export function Shell({ children }: { children: React.ReactNode }) {
@@ -35,10 +36,12 @@ export function Shell({ children }: { children: React.ReactNode }) {
     <>
       <BootSequence />
       <StatusBar />
+      <ScrollProgress />
       <MagneticCursor />
       <CommandPalette />
       <main className="pt-7">{children}</main>
-      {/* CRT overlays — controlled by [data-theme='crt'] */}
+      {/* texture + CRT overlays */}
+      <div className="grain" aria-hidden />
       <div className="crt-scanlines" aria-hidden />
       <div className="crt-vignette" aria-hidden />
     </>

@@ -37,7 +37,7 @@ export function SectionHeader({
         <span className="h-px w-8 bg-line" />
         <span>{label}</span>
       </div>
-      <h2 className="font-sans text-2xl font-semibold tracking-tight text-text sm:text-4xl">{title}</h2>
+      <h2 className="font-display text-3xl font-bold tracking-tight text-text sm:text-5xl">{title}</h2>
       {caption && <p className="mt-3 max-w-2xl text-sm leading-relaxed text-text-dim sm:text-base">{caption}</p>}
     </div>
   );

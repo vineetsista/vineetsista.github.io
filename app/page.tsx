@@ -1,4 +1,6 @@
 import { OrderBookHero } from '@/components/hero/OrderBookHero';
+import { TickerTape } from '@/components/shell/TickerTape';
+import { Manifesto } from '@/components/sections/Manifesto';
 import { Throughline } from '@/components/sections/Throughline';
 import { PositionBlotter } from '@/components/sections/PositionBlotter';
 import { Instruments } from '@/components/sections/Instruments';
@@ -12,6 +14,8 @@ export default function Page() {
   return (
     <>
       <OrderBookHero />
+      <TickerTape />
+      <Manifesto />
       <Throughline />
       <PositionBlotter />
       <Instruments />
@@ -19,6 +23,7 @@ export default function Page() {
       <ResearchLab />
       <SystemSpec />
       <Terminal />
+      <TickerTape reverse />
       <Contact />
     </>
   );

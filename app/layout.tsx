@@ -1,7 +1,25 @@
 import type { Metadata, Viewport } from 'next';
 import { GeistSans } from 'geist/font/sans';
 import { GeistMono } from 'geist/font/mono';
+import { Bricolage_Grotesque, Instrument_Serif } from 'next/font/google';
 import './globals.css';
+
+// Display: characterful grotesque for big statements.
+const display = Bricolage_Grotesque({
+  subsets: ['latin'],
+  weight: ['600', '700', '800'],
+  variable: '--font-display',
+  display: 'swap',
+});
+
+// Human accent: an editorial serif italic for the personal voice.
+const serif = Instrument_Serif({
+  subsets: ['latin'],
+  weight: '400',
+  style: ['normal', 'italic'],
+  variable: '--font-serif',
+  display: 'swap',
+});
 import { ThemeProvider } from '@/components/shell/ThemeProvider';
 import { Shell } from '@/components/shell/Shell';
 
@@ -48,7 +66,11 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" data-theme="dark" className={`${GeistSans.variable} ${GeistMono.variable}`}>
+    <html
+      lang="en"
+      data-theme="dark"
+      className={`${GeistSans.variable} ${GeistMono.variable} ${display.variable} ${serif.variable}`}
+    >
       <body className="font-sans antialiased">
         <ThemeProvider>
           <Shell>{children}</Shell>

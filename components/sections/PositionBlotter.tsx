@@ -34,13 +34,23 @@ function BlotterRow({ role, open, onToggle }: { role: Role; open: boolean; onTog
           <span className="block truncate font-sans text-[14px] font-medium text-text group-hover:text-amber sm:text-[15px]">
             {role.role}
           </span>
-          <span className="block truncate font-mono text-[11px] text-text-dim sm:hidden">{role.org}</span>
+          <span className="block truncate font-mono text-[11px] text-text-dim">
+            {role.org}
+            {role.sub && <span className="text-text-dim/70"> · {role.sub}</span>}
+          </span>
         </span>
         {/* org (desktop) */}
-        <span className="hidden truncate font-mono text-[12px] text-text-dim sm:block">{role.org}</span>
+        <span className="hidden min-w-0 flex-col justify-center sm:flex">
+          <span className="truncate font-mono text-[12px] text-text-dim">{role.duration}</span>
+        </span>
         {/* location + expand */}
         <span className="hidden items-center justify-end gap-2 font-mono text-[11px] text-text-dim sm:flex">
-          {role.active && <span className="text-[9px] uppercase tracking-wider text-bid">active</span>}
+          {role.active && (
+            <span className="flex items-center gap-1 text-[9px] uppercase tracking-wider text-bid">
+              <span className="inline-block h-1 w-1 animate-pulse-glow rounded-full bg-bid" />
+              active
+            </span>
+          )}
           {role.location}
           {hasDetail && (
             <span className="text-amber transition-transform" style={{ transform: open ? 'rotate(90deg)' : 'none' }}>
@@ -89,8 +99,8 @@ export function PositionBlotter() {
         <div className="border border-line bg-surface/40">
           <div className="hidden grid-cols-[140px_1fr_180px_120px] gap-x-3 border-b border-line px-3 py-2 font-mono text-[9px] uppercase tracking-wider text-text-dim sm:grid">
             <span>date range</span>
-            <span>role</span>
-            <span>org</span>
+            <span>position · org</span>
+            <span>tenure</span>
             <span className="text-right">location</span>
           </div>
           {ROLES.map((r) => (

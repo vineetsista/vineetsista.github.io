@@ -54,7 +54,8 @@ function InstrumentCard({ p }: { p: Project }) {
             </span>
           )}
         </div>
-        <div className="flex gap-2 font-mono text-[10px] text-text-dim">
+        <div className="flex items-center gap-2 font-mono text-[10px] text-text-dim">
+          {p.date && <span className="hidden text-text-dim/70 sm:inline">{p.date}</span>}
           {p.repo && (
             <button
               onClick={(e) => { e.stopPropagation(); openExternal(p.repo!); }}

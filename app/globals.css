@@ -71,6 +71,66 @@ body {
   background-size: 48px 48px;
 }
 
+/* Display + serif type helpers. */
+.font-display { font-family: var(--font-display), system-ui, sans-serif; }
+.font-serif-accent { font-family: var(--font-serif), Georgia, serif; }
+
+/* Grain overlay — adds analog texture/depth over the whole page. */
+.grain {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 58;
+  opacity: 0.045;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+[data-theme='crt'] .grain { opacity: 0.08; }
+
+/* Gradient-mesh atmosphere — layered radial washes for depth. */
+.mesh {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(40% 50% at 12% 18%, rgba(255, 176, 0, 0.10), transparent 70%),
+    radial-gradient(38% 45% at 88% 30%, rgba(22, 199, 132, 0.08), transparent 70%),
+    radial-gradient(45% 55% at 70% 92%, rgba(45, 212, 191, 0.07), transparent 70%);
+}
+
+/* Amber→cyan animated gradient text for signature words. */
+.grad-text {
+  background: linear-gradient(100deg, var(--amber), var(--cyan), var(--amber));
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+.grad-text-anim { animation: shimmer 6s linear infinite; }
+
+/* Text glow for headline punch. */
+.glow-amber-text { text-shadow: 0 0 24px rgba(255, 176, 0, 0.35); }
+
+/* Marquee edge fade. */
+.marquee-mask {
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 7%, #000 93%, transparent);
+  mask-image: linear-gradient(to right, transparent, #000 7%, #000 93%, transparent);
+}
+
+/* Animated underline for links. */
+.link-underline {
+  background-image: linear-gradient(var(--amber), var(--amber));
+  background-size: 0% 1px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  transition: background-size 0.3s ease;
+}
+.link-underline:hover { background-size: 100% 1px; }
+
+/* GSAP reveal base state (set via JS; falls back visible). */
+.gsap-reveal { will-change: transform, opacity; }
+
 .hairline {
   border-color: var(--line);
 }
